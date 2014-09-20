@@ -3,6 +3,7 @@ package mario.stages.first;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
+import mario.joystick.JoystickController;
 import mario.player.Mario;
 import br.com.etyllica.cinematics.parallax.ImageParallax;
 import br.com.etyllica.context.Application;
@@ -23,7 +24,7 @@ public class Stage extends Application {
 	
 	protected Mario mario;
 	
-	protected int groundPosition = 392;
+	protected int groundPosition = 354;
 	
 	protected ImageParallax background;
 	
@@ -40,7 +41,8 @@ public class Stage extends Application {
 		
 		mario = new Mario(30, groundPosition);
 		
-		controller = new EasyController(mario);
+		//controller = new EasyController(mario);
+		controller = new JoystickController(mario);
 		
 		shadow = new ShadowLayer(0, 0, w, h);
 		
@@ -51,7 +53,7 @@ public class Stage extends Application {
 	
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
-				
+	
 		//mario.handleEvent(event);
 		controller.handleEvent(event);
 
@@ -79,8 +81,6 @@ public class Stage extends Application {
 	@Override
 	public void draw(Graphic g) {
 		
-		g.setTransform(AffineTransform.getTranslateInstance(0, 38));
-		
 		background.draw(g);
 		
 		map.draw(g);
@@ -103,8 +103,8 @@ public class Stage extends Application {
 			}
 		}
 		
-		g.setColor(Color.WHITE);
-		g.drawShadow(100, 100, Integer.toString(map.getOffsetX()));
+		/*g.setColor(Color.WHITE);
+		g.drawShadow(100, 100, Integer.toString(map.getOffsetX()));*/
 	}
 	
 }

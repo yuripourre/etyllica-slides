@@ -44,7 +44,7 @@ public class YoshiIsland2 extends Stage {
 			g.drawShadow(text.getX(), text.getY(), text.getText());			
 		}
 
-		g.resetTransform();		
+		g.resetTransform();
 	}
 
 	private void createFirstSlide() {
