@@ -4,11 +4,11 @@ import br.com.etyllica.context.Application;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.ImageLayer;
 
-public class ImageDrawing extends Application {
+public class Exemplo1 extends Application {
 
 	private ImageLayer layer;
 	
-	public ImageDrawing(int w, int h) {
+	public Exemplo1(int w, int h) {
 		super(w, h);
 	}
 
