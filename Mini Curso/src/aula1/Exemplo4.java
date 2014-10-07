@@ -73,7 +73,7 @@ public class Exemplo4 extends Application {
 	@Override
 	public void draw(Graphic g) {
 		background.draw(g);
-		miniBoo.draw(g);		
+		miniBoo.draw(g);
 		boo.draw(g);
 	}
 	
