@@ -50,6 +50,10 @@ public class Exemplo7 extends Application {
 	@Override
 	public void draw(Graphic g) {
 		background.draw(g);
+		
+		g.setFontSize(32f);
+		g.drawStringShadowX(30, "Select your character");
+		
 		beast.draw(g);
 		gambit.draw(g);
 
