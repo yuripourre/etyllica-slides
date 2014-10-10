@@ -1,9 +1,11 @@
-package aula4;
+package aula4.client;
 
 import java.awt.Color;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import aula4.model.Ball;
+import aula4.server.PongServerListener;
 import br.com.etyllica.context.Application;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
@@ -18,18 +20,20 @@ import br.com.etyllica.network.realtime.ClientActionListener;
 import br.com.etyllica.network.realtime.model.KeyAction;
 import br.com.etyllica.network.realtime.model.Message;
 
-public class ClientApplication extends Application implements ClientActionListener<State> {
+public class PongApplication extends Application implements ClientActionListener<State> {
 
 	private ActionClient client;
 
 	private Map<Integer, State> states = new LinkedHashMap<Integer, State>();
 	private Map<Integer, GeometricLayer> players = new LinkedHashMap<Integer, GeometricLayer>();
 
+	private Ball ball;
+	
 	//Message Stuff
 	private int sender = -1;
 	private String messageText = "";
 
-	public ClientApplication(int w, int h) {
+	public PongApplication(int w, int h) {
 		super(w, h);
 	}
 
@@ -48,6 +52,8 @@ public class ClientApplication extends Application implements ClientActionListen
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		ball = new Ball(0, 0, 20, 20);
 
 		loading = 100;
 	}
@@ -64,11 +70,13 @@ public class ClientApplication extends Application implements ClientActionListen
 		g.setColor(Color.CYAN);
 		g.fillRect(0, 0, w, h);
 
-		g.setColor(Color.BLACK);	
+		g.setColor(Color.BLACK);
 
 		for(GeometricLayer player: players.values()) {
 			g.fillRect(player);
 		}
+		
+		g.fillRect(ball);
 
 	}
 
@@ -88,7 +96,7 @@ public class ClientApplication extends Application implements ClientActionListen
 		}
 
 		//Ignore Repeat Keys
-		if(event.getState()!=KeyState.TYPED)
+		if(event.getState() != KeyState.TYPED)
 			client.sendKeyAction(new KeyAction(event.getKey(), event.getState()));
 
 		return GUIEvent.NONE;
@@ -101,7 +109,13 @@ public class ClientApplication extends Application implements ClientActionListen
 
 			int id = state.id;
 
-			GeometricLayer player = getPlayer(id);
+			GeometricLayer player = null;
+						
+			if(id == PongServerListener.BALL_ID) {
+				player = ball;
+			} else {
+				player = getPlayer(id);
+			}
 
 			if(player != null)
 				player.setCoordinates(state.x, state.y);
@@ -115,7 +129,7 @@ public class ClientApplication extends Application implements ClientActionListen
 	}
 
 	public GeometricLayer getPlayer(int id) {
-		
+				
 		GeometricLayer player = players.get(id);
 		
 		if(player == null) {

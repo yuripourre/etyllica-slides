@@ -1,5 +1,6 @@
 package aula4.server;
 
+import aula4.model.Ball;
 import aula4.model.Paddle;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.KeyState;
@@ -7,7 +8,7 @@ import br.com.etyllica.network.examples.action.ActionServerListener;
 import br.com.etyllica.network.examples.action.model.State;
 import br.com.etyllica.network.realtime.model.KeyAction;
 
-public class PongServer extends ActionServerListener<Paddle, State> {
+public class PongServerListener extends ActionServerListener<Paddle, State> {
 
 	private int w;
 	private int h;
@@ -16,12 +17,34 @@ public class PongServer extends ActionServerListener<Paddle, State> {
 	private int secondPlayerId = 0;
 
 	private int count = 0;
-
-	public PongServer(int interval, int w, int h) {
+	
+	private Ball ball;
+	
+	private boolean started = false;
+	
+	public static final int BALL_ID = -999;
+	
+	public PongServerListener(int interval, int w, int h) {
 		super(interval);
 
 		this.w = w;
 		this.h = h;
+		
+		initServer();
+	}
+	
+	private void initServer() {
+		
+		ball = new Ball(w/2, h/2, 20, 20);
+		
+		State ballState = new State();
+		
+		ballState.id = BALL_ID;
+		ballState.x = ball.getX();
+		ballState.y = ball.getY();
+		
+		
+		states.put(BALL_ID, ballState);
 	}
 
 	@Override
@@ -58,10 +81,12 @@ public class PongServer extends ActionServerListener<Paddle, State> {
 
 		Paddle paddle = null;
 
-		if(count == 0)
+		if(count == 0) {
 			paddle = createFirstPlayer(id);
-		else 
+		} else {
 			paddle = createSecondPlayer(id);
+			started = true;
+		}
 
 		count++;
 		
@@ -106,6 +131,26 @@ public class PongServer extends ActionServerListener<Paddle, State> {
 		state.id = id;
 		
 		return state;
+	}
+
+	@Override
+	public void execute() {
+		if(started) {
+			ball.update();
+			
+			if(ball.getX() < -ball.getW()) {
+				ball.setX(w/2-ball.getW()/2);
+			}
+			
+			if(ball.getX() > w) {
+				ball.setX(w/2-ball.getW()/2);
+			}
+			
+			State ballState = states.get(BALL_ID);
+			ballState.x = ball.getX();
+			ballState.y = ball.getY();
+			
+		}
 	}		
 
 }

@@ -1,25 +1,26 @@
 package aula4;
 
+import aula4.client.PongApplication;
 import br.com.etyllica.EtyllicaFrame;
 import br.com.etyllica.context.Application;
 
 
-public class GameClient extends EtyllicaFrame {
+public class PongClient extends EtyllicaFrame {
 
 	private static final long serialVersionUID = 1L;
 	
-	public GameClient() {
+	public PongClient() {
 		super(800, 600);
 	}
 
 	public static void main(String[] args) throws Exception {
-		GameClient game = new GameClient();
+		PongClient game = new PongClient();
 		game.init();
 	}
 
 	@Override
 	public Application startApplication() {
-		return new ClientApplication(w, h);
+		return new PongApplication(w, h);
 	}
 
 }
