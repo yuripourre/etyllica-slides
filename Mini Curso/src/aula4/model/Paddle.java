@@ -7,7 +7,7 @@ public class Paddle extends GeometricLayer {
 	private boolean upPressed = false;
 	private boolean downPressed = false;
 	
-	private int speed = 5;
+	private int speed = 10;
 	
 	public Paddle(int x, int y, int w, int h) {
 		super(x, y, w, h);

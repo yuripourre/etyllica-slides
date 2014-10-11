@@ -10,20 +10,26 @@ public class Ball extends GeometricLayer {
 	private double realX = 0;
 	private double realY = 0;
 	
-	private int speed = 5;
+	private int speed = 4;
 	
 	public Ball(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		
 		realX = x;
-		realY = y;
-		
-		dx = 1;
-		dy = 0;
+		realY = y;		
 	}
 	
 	public void setAngle(double angle) {
-				
+		dx = Math.sin(Math.toRadians(angle)) * speed;
+		dy = Math.cos(Math.toRadians(angle)) * speed;
+	}
+	
+	@Override
+	public void setCoordinates(int x, int y) {
+		super.setCoordinates(x, y);
+		
+		this.realX = x;
+		this.realY = y;
 	}
 	
 	public void update() {
@@ -34,5 +40,11 @@ public class Ball extends GeometricLayer {
 		x = (int)realX;
 		y = (int)realY;		
 	}
+
+	public void alternateDy() {
+		dy = -dy;
+	}
+	
+	
 		
 }

@@ -1,9 +1,12 @@
 package aula4.server;
 
+import java.util.Random;
+
 import aula4.model.Ball;
 import aula4.model.Paddle;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.KeyState;
+import br.com.etyllica.linear.Point2D;
 import br.com.etyllica.network.examples.action.ActionServerListener;
 import br.com.etyllica.network.examples.action.model.State;
 import br.com.etyllica.network.realtime.model.KeyAction;
@@ -15,7 +18,7 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 
 	private int firstPlayerId = 0;
 	private int secondPlayerId = 0;
-
+	
 	private int count = 0;
 	
 	private Ball ball;
@@ -42,8 +45,7 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 		ballState.id = BALL_ID;
 		ballState.x = ball.getX();
 		ballState.y = ball.getY();
-		
-		
+				
 		states.put(BALL_ID, ballState);
 	}
 
@@ -85,14 +87,14 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 			paddle = createFirstPlayer(id);
 		} else {
 			paddle = createSecondPlayer(id);
-			started = true;
+			startGame();
 		}
 
 		count++;
 		
 		return paddle;
 	}
-
+	
 	private Paddle createFirstPlayer(int id) {
 		firstPlayerId = id;
 
@@ -108,7 +110,16 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 
 		return paddle;
 	}
+	
+	private void startGame() {
+		started = true;
 
+		ball.setCoordinates(w/2-ball.getW()/2, h/2-ball.getH()/2);
+		
+		Random random = new Random();
+		ball.setAngle(random.nextInt(360));
+	}
+	
 	@Override
 	public void updatePlayer(Paddle player) {
 		player.update();
@@ -138,12 +149,21 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 		if(started) {
 			ball.update();
 			
+			updateCollision(firstPlayerId);
+			updateCollision(secondPlayerId);
+			
+			int border = 30;
+			
 			if(ball.getX() < -ball.getW()) {
-				ball.setX(w/2-ball.getW()/2);
+				startGame();
 			}
 			
 			if(ball.getX() > w) {
-				ball.setX(w/2-ball.getW()/2);
+				startGame();
+			}
+			
+			if((ball.getY() < -ball.getH()+border) || (ball.getY()+ball.getH() > h-border)) {
+				ball.alternateDy();
 			}
 			
 			State ballState = states.get(BALL_ID);
@@ -151,6 +171,24 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 			ballState.y = ball.getY();
 			
 		}
-	}		
+	}
+		
+	private void updateCollision(int paddleId) {
+		
+		Paddle paddle = players.get(paddleId);
+			
+		if(ball.colideRect(paddle)) {
+			
+			double ballCenterX = ball.getX()+ball.getW()/2;
+			double ballCenterY = ball.getY()+ball.getH()/2;
+			
+			double paddleCenterX = paddle.getX()+paddle.getW()/2;
+			double paddleCenterY = paddle.getY()+paddle.getH()/2;
+			
+			double angle = Point2D.angle(paddleCenterX, paddleCenterY, ballCenterX, ballCenterY);			
+			
+			ball.setAngle(angle);
+		}			
+	}
 
 }
