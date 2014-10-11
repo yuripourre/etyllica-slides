@@ -24,7 +24,6 @@ public class PongApplication extends Application implements ClientActionListener
 
 	private ActionClient client;
 
-	private Map<Integer, State> states = new LinkedHashMap<Integer, State>();
 	private Map<Integer, GeometricLayer> players = new LinkedHashMap<Integer, GeometricLayer>();
 
 	private Ball ball;
@@ -59,9 +58,7 @@ public class PongApplication extends Application implements ClientActionListener
 	}
 
 	public void update(long now) {
-		//System.out.println("Update");
-		//if(loading>99)
-		//client.update();
+		
 	}
 
 	@Override
@@ -84,15 +81,19 @@ public class PongApplication extends Application implements ClientActionListener
 	public GUIEvent updateKeyboard(KeyEvent event) {
 
 		if(event.isKeyDown(KeyEvent.TSK_1)) {
-			client.sendMessage("Hi!");
+			client.sendMessage("Tah malz, hein!");
 		}
 
 		else if(event.isKeyDown(KeyEvent.TSK_2)) {
-			client.sendMessage("Help Me!");
+			client.sendMessage("Vc tah roubando!");
 		}
 
 		else if(event.isKeyDown(KeyEvent.TSK_3)) {
-			client.sendMessage("Run!!");
+			client.sendMessage("No pc eh mole, partiu Ping Pong!?");
+		}
+		
+		else if(event.isKeyDown(KeyEvent.TSK_4)) {
+			client.sendMessage("Tava olhando pro lado, essa nao valeu!");
 		}
 
 		//Ignore Repeat Keys
