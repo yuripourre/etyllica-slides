@@ -12,6 +12,7 @@ import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.KeyState;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.GeometricLayer;
+import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.network.examples.action.ActionServerApplication;
 import br.com.etyllica.network.examples.action.kryo.KryoActionClient;
 import br.com.etyllica.network.examples.action.model.ActionClient;
@@ -27,6 +28,8 @@ public class PongApplication extends Application implements ClientActionListener
 	private Map<Integer, GeometricLayer> players = new LinkedHashMap<Integer, GeometricLayer>();
 
 	private Ball ball;
+	
+	private ImageLayer background;
 	
 	//Message Stuff
 	private int sender = -1;
@@ -53,6 +56,8 @@ public class PongApplication extends Application implements ClientActionListener
 		}
 		
 		ball = new Ball(0, 0, 20, 20);
+		
+		background = new ImageLayer("ice.png");
 
 		loading = 100;
 	}
@@ -64,8 +69,9 @@ public class PongApplication extends Application implements ClientActionListener
 	@Override
 	public void draw(Graphic g) {
 
-		g.setColor(Color.CYAN);
-		g.fillRect(0, 0, w, h);
+		/*g.setColor(Color.CYAN);
+		g.fillRect(0, 0, w, h);*/
+		background.draw(g);
 
 		g.setColor(Color.BLACK);
 

@@ -12,11 +12,12 @@ public class PongServer {
 	
 	public static void main(String[] args) throws Exception {
 		
-		final int interval = 80;
-		
+		//Window Size
 		final int w = 800;
 		final int h = 600;
 		
+		//Interval between updates
+		final int interval = 80;
 		PongServerListener serverListener = new PongServerListener(interval, w, h);
 		
 		Server server = new KryoActionServer<State>(ACTION_TCP_PORT, ACTION_UDP_PORT, serverListener);

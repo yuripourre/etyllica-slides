@@ -27,6 +27,8 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 	
 	public static final int BALL_ID = -999;
 	
+	public static final int BORDER = 30;
+	
 	public PongServerListener(int interval, int w, int h) {
 		super(interval);
 
@@ -122,7 +124,7 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 	
 	@Override
 	public void updatePlayer(Paddle player) {
-		player.update();
+		player.update(h);
 	}
 
 	@Override
@@ -146,36 +148,55 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 
 	@Override
 	public void execute() {
+		
 		if(started) {
+			
+			updateCollisions();
+			
 			ball.update();
 			
-			updateCollision(firstPlayerId);
-			updateCollision(secondPlayerId);
-			
-			int border = 30;
-			
 			if(ball.getX() < -ball.getW()) {
+				//Player 2 Score
 				startGame();
 			}
 			
 			if(ball.getX() > w) {
+				//Player 1 Score
 				startGame();
 			}
 			
-			if((ball.getY() < -ball.getH()+border) || (ball.getY()+ball.getH() > h-border)) {
+			if(ball.getY() < BORDER) {
+				ball.setY(BORDER);
+				ball.alternateDy();
+			}
+			if(ball.getY()+ball.getH() > h-BORDER) {
+				ball.setY(h-BORDER-ball.getH());
 				ball.alternateDy();
 			}
 			
 			State ballState = states.get(BALL_ID);
-			ballState.x = ball.getX();
-			ballState.y = ball.getY();
 			
+			ballState.x = ball.getX();
+			ballState.y = ball.getY();			
+		}
+	}
+	
+	private void updateCollisions() {
+		
+		Paddle paddle1 = players.get(firstPlayerId);
+		
+		if(updateCollision(paddle1)) {
+			ball.setX(paddle1.getX()+paddle1.getW());
+		}
+		
+		Paddle paddle2 = players.get(secondPlayerId);
+		
+		if(updateCollision(paddle2)) {
+			ball.setX(paddle2.getX()-ball.getW());
 		}
 	}
 		
-	private void updateCollision(int paddleId) {
-		
-		Paddle paddle = players.get(paddleId);
+	private boolean updateCollision(Paddle paddle) {
 			
 		if(ball.colideRect(paddle)) {
 			
@@ -188,7 +209,11 @@ public class PongServerListener extends ActionServerListener<Paddle, State> {
 			double angle = Point2D.angle(paddleCenterX, paddleCenterY, ballCenterX, ballCenterY);			
 			
 			ball.setAngle(angle);
-		}			
+			
+			return true;
+		}
+		
+		return false;
 	}
 
 }

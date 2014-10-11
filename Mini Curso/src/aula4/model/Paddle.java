@@ -1,5 +1,6 @@
 package aula4.model;
 
+import aula4.server.PongServerListener;
 import br.com.etyllica.layer.GeometricLayer;
 
 public class Paddle extends GeometricLayer {
@@ -29,13 +30,21 @@ public class Paddle extends GeometricLayer {
 		this.downPressed = downPressed;
 	}
 	
-	public void update() {
+	public void update(int h) {
 		if(upPressed) {
 			setOffsetY(-speed);
+			
+			if(y <= PongServerListener.BORDER) {
+				y = PongServerListener.BORDER;
+			}
 		}
 		
 		if(downPressed) {
 			setOffsetY(speed);
+			
+			if(y+getH() >= h-PongServerListener.BORDER) {
+				y = h-PongServerListener.BORDER-getH();
+			}
 		}
 	}
 		

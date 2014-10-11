@@ -20,6 +20,10 @@ public class PongClient extends EtyllicaFrame {
 
 	@Override
 	public Application startApplication() {
+		
+		String path = PongClient.class.getResource("").toString();
+		setPath(path+"../../");
+		
 		return new PongApplication(w, h);
 	}
 
