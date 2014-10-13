@@ -6,7 +6,7 @@ import br.com.tide.arcade.player.ArcadePlayerListener;
 public class Gambit extends Hero {
 
 	public Gambit(int x, int y, ArcadePlayerListener<MarvelCharacter> listener) {
-		super(x, y, "sprites/gambit.png", listener);
+		super(x, y, "xmen/gambit.png", listener);
 	}
 	
 	@Override

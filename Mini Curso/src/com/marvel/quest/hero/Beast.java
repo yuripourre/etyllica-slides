@@ -3,11 +3,10 @@ package com.marvel.quest.hero;
 import br.com.tide.arcade.player.ArcadePlayerListener;
 
 
-
 public class Beast extends Hero {
 
 	public Beast(int x, int y, ArcadePlayerListener<MarvelCharacter> listener) {
-		super(x, y, "sprites/beast.png", listener);
+		super(x, y, "xmen/beast.png", listener);
 	}
 	
 	@Override

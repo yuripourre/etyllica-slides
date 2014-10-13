@@ -10,8 +10,8 @@ import br.com.tide.arcade.player.ArcadePlayerListener;
 public class StrongMan extends Enemy {
 
 	public StrongMan(int x, int y, ArcadePlayerListener<MarvelCharacter> listener) {
-		super(x, y, "sprites/strongman.png", listener);
-				
+		super(x, y, "xmen/strongman.png", listener);
+		
 		onStand();
 	}
 	

@@ -46,10 +46,11 @@ public class Exemplo8 extends Stage {
 		} else if(Exemplo7.GAMBIT.equals(session.getAsString(Exemplo7.CHAR_PARAM))) {
 			hero = new Gambit(40, 200, this);
 		}
-				
+		
 		easyController = new EasyController(hero);
 		
 		characters.add(hero);
+		heroes.add(hero);
 				
 		loadEnemy();
 				
@@ -65,6 +66,7 @@ public class Exemplo8 extends Stage {
 		strongMan.setTarget(hero);
 		
 		characters.add(strongMan);
+		enemies.add(strongMan);
 	}
 	
 	@Override
@@ -87,7 +89,6 @@ public class Exemplo8 extends Stage {
 		for(MarvelCharacter character: characters) {
 			character.draw(g);
 		}
-
 	}
 	
 	@Override
