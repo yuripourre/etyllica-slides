@@ -1,7 +1,7 @@
 package aula4;
+import examples.action.adapter.kryo.KryoActionServer;
+import examples.action.model.State;
 import aula4.server.PongServerListener;
-import br.com.etyllica.network.examples.action.kryo.KryoActionServer;
-import br.com.etyllica.network.examples.action.model.State;
 import br.com.etyllica.network.server.Server;
 
 

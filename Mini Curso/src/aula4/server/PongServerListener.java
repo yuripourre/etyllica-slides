@@ -2,13 +2,13 @@ package aula4.server;
 
 import java.util.Random;
 
+import examples.action.ActionServerListener;
+import examples.action.model.State;
 import aula4.model.Ball;
 import aula4.model.Paddle;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.KeyState;
 import br.com.etyllica.linear.Point2D;
-import br.com.etyllica.network.examples.action.ActionServerListener;
-import br.com.etyllica.network.examples.action.model.State;
 import br.com.etyllica.network.realtime.model.KeyAction;
 
 public class PongServerListener extends ActionServerListener<Paddle, State> {

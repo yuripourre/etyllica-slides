@@ -13,13 +13,13 @@ import br.com.etyllica.core.event.KeyState;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.GeometricLayer;
 import br.com.etyllica.layer.ImageLayer;
-import br.com.etyllica.network.examples.action.ActionServerApplication;
-import br.com.etyllica.network.examples.action.kryo.KryoActionClient;
-import br.com.etyllica.network.examples.action.model.ActionClient;
-import br.com.etyllica.network.examples.action.model.State;
 import br.com.etyllica.network.realtime.ClientActionListener;
 import br.com.etyllica.network.realtime.model.KeyAction;
 import br.com.etyllica.network.realtime.model.Message;
+import examples.action.ActionServerApplication;
+import examples.action.adapter.kryo.KryoActionClient;
+import examples.action.model.ActionClient;
+import examples.action.model.State;
 
 public class PongApplication extends Application implements ClientActionListener<State> {
 
