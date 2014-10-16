@@ -1,6 +1,7 @@
 import aula3.Exemplo10;
 import aula3.Exemplo11;
-import aula3.Exemplo12;
+import aula3.Exemplo13;
+import aula3.Exemplo14;
 import br.com.etyllica.EtyllicaFrame;
 import br.com.etyllica.context.Application;
 
@@ -24,7 +25,7 @@ public class Aula3 extends EtyllicaFrame {
 		String path = Aula3.class.getResource("").toString();
 		setPath(path+"../");
 		
-		return new Exemplo11(w, h);
+		return new Exemplo10(w, h);
 	}
 
 }
